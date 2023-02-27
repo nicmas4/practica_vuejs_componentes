@@ -4,68 +4,61 @@
     <head>
         <meta charset="utf-8">
         <title>VueJS: Componentes</title>
-        <meta name="author" content="">
+        <meta name="author" content="Nicolás">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- TODO: Cargar CSS Bootstrap (no es necesario el JS) -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     </head>
-
     <body>
-
         <h1 id="autor">Autor: Nicolas Mas Forner</h1>
 
         <!-- https://vuejs.org/v2/guide/index.html -->
         <div id="app">
-
             <div class="jumbotron">
                 <h1 class="py-5 ps-2" style="background-color:Gainsboro;" id="title">{{col.collection.title}}</h1>
             </div>
-            <div class="container row mx-auto">
-
-                <div v-for="movie in col.collection.items" class="card col-md-4 mb-1" >
-                    <div v-for="item in movie.data" class="m-2">
-                    <p class="card-title h5">{{item.prompt}}</p>
-                    <p class="card-text">{{item.value}}</p>
-                    </div>
-                    <a :href="movie.href" class="btn btn-primary me-auto pb-2 mb-2" target="_blank"> Ver </a>
-                </div>
+            <div>
+              <item-data :col="col" v-if="col.collection.EditForm"></item-data>
+              <edit-form :col="col" v-else="col.collection.EditForm"></edit-form>
             </div>
-
-            <!--
-                 TODO: Aplicación VueJS. Ver archivo ./js/script.js
-               - Mostrar el título de la colección dentro de un componente Jumbotron de Bootstrap https://getbootstrap.com/docs/4.0/components/jumbotron/. En su interior habrá un <h1> con id "title" que mostrará el título de la colección
-               - Para cada item: (https://vuejs.org/v2/guide/index.html#Conditionals-and-Loops)
-                 - Crear un componente item-data
-            -->
-            <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
         </div>
 
-
-
         <!-- Plantilla para el componente edit-form -->
-        <script type="text/x-template" id="editForm">
-
-            <!--
-                 TODO: Componente edit-form
-            -->
-
+        <script type="text/x-template" id="edit-form" >
+            <div class="container row mx-auto">
+                <div v-for="movie in col.collection.items" class="card col-md-4 mb-1">
+                    <div v-if="col.collection.idE == movie.id">
+                        <div v-for="item in movie.data" class="m-2">
+                            <p class="card-title h5">{{item.prompt}}</p>
+                            <textarea type="text" class="form-control" :ref="item.name" :value="item.value"></textarea>
+                        </div>
+                        <button @click="closeForm(movie.id)" class="btn btn-primary w-25">Cerrar</button>
+                    </div>
+                    <div v-else>
+                        <div v-for="item in movie.data" class="m-2">
+                            <p class="card-title h5">{{item.prompt}}</p>
+                            <p class="card-text">{{item.value}}</p>
+                        </div>
+                        <a :href="movie.href" class="btn btn-primary me-auto pb-2 mb-2" target="_blank"> Ver </a>
+                    </div>
+                </div>
+            </div>
+       </script>
+       <script type="text/x-template" id="item-data">
+            <div class="container row mx-auto">
+                <div v-for="movie in col.collection.items" class="card col-md-4 mb-1">
+                    <div v-for="item in movie.data" class="m-2">
+                        <p class="card-title h5">{{item.prompt}}</p>
+                        <p class="card-text">{{item.value}}</p>
+                    </div>
+                    <a :href="movie.href" class="btn btn-primary me-auto pb-2 mb-2" target="_blank"> Ver </a>
+                    <button @click="toggleEditFormVisibility(movie.id)" class="btn btn-primary me-auto pb-2 mb-2">Editar</button>
+                </div>
+            </div>
         </script>
 
-
-
-        <!-- Plantilla para el componente item-data -->
-        <script type="text/x-template" id="itemData">
-
-            <!--
-                 TODO: Componente item-data
-            -->
-
-        </script>
-
-
-        <!-- TODO: Cargar librería VueJS y archivo js/script.js -->
-        <script src="./js/script.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="/js/script.js"></script>
     </body>
-
 </html>

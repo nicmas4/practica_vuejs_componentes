@@ -1,13 +1,17 @@
+let ie = [];
+
 // Sample data
 var server_data = {
     collection :
-    {
+    {   
+        idE:0,
         title : "Movie List",
         type : "movie",
         version : "1.0",
-
+        EditForm:true,
         items : [
 	          {
+                id : 1,
                 href : "https://en.wikipedia.org/wiki/The_Lord_of_the_Rings_(film_series)",
                 data : [
 		                {name : "name", value : "The Lord of the Rings", prompt : "Name"},
@@ -17,6 +21,7 @@ var server_data = {
                 ]
 	          },
 	          {
+                id : 2,
                 href : "https://en.wikipedia.org/wiki/The_Hunger_Games_(film_series)",
                 data : [
 		                {name : "name", value : "The Hunger Games", prompt : "Name"},
@@ -26,6 +31,7 @@ var server_data = {
                 ]
 	          },
 	          {
+                id : 3,
                 href : "https://en.wikipedia.org/wiki/Game_of_Thrones",
                 data : [
 		                {name : "name", value : "Game of Thrones", prompt : "Name"},
@@ -37,17 +43,39 @@ var server_data = {
         ]
     }
 };
+ie.push(server_data.collection.idE)
+console.log(ie)
 
-
-// TODO: Componente edit-form
+// TODO: Componen te edit-form
 Vue.component('edit-form', {
-
+    template: '#edit-form',
+    props: ['col'],
+    methods: {
+        closeForm(id) {
+            server_data.collection.items.forEach(movie=>{
+                if(movie.id == id){
+                    movie.data[0].value=this.$refs.name[0].value;
+                    movie.data[1].value=this.$refs.description[0].value;
+                    movie.data[2].value=this.$refs.director[0].value;
+                    movie.data[3].value=this.$refs.datePublished[0].value;
+                }
+            })
+            server_data.collection.EditForm = !server_data.collection.EditForm;
+        }
+    }
 })
 
 // TODO: Componente item-data
 Vue.component('item-data', {
-
-})
+    template: '#item-data',
+    props: ['col'],
+    methods: {
+        toggleEditFormVisibility(id) {
+            server_data.collection.EditForm = !server_data.collection.EditForm;
+            server_data.collection.idE = id;
+        }
+    }
+  });
 
 // Aplicación VueJS
 // La aplicación recibe los datos en la variable de datos "col"
