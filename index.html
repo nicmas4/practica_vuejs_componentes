@@ -31,7 +31,7 @@
                     <div v-if="col.collection.idE == movie.id">
                         <div v-for="item in movie.data" class="m-2">
                             <p class="card-title h5">{{item.prompt}}</p>
-                            <textarea type="text" class="form-control" :ref="item.name" :value="item.value"></textarea>
+                            <textarea type="text" class="form-control mb-2" :ref="item.name" :value="item.value"></textarea>
                         </div>
                         <button @click="closeForm(movie.id)" class="btn btn-primary w-25">Cerrar</button>
                     </div>
