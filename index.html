@@ -52,8 +52,11 @@
                         <p class="card-title h5">{{item.prompt}}</p>
                         <p class="card-text">{{item.value}}</p>
                     </div>
-                    <a :href="movie.href" class="btn btn-primary me-auto pb-2 mb-2" target="_blank"> Ver </a>
-                    <button @click="toggleEditFormVisibility(movie.id)" class="btn btn-primary me-auto pb-2 mb-2">Editar</button>
+                    <div>
+                        <a :href="movie.href" class="btn btn-primary pb-2 mb-2" target="_blank"> Ver </a>
+                        <button @click="toggleEditFormVisibility(movie.id)" class="btn btn-primary pb-2 mb-2 bg-primary">Editar</button>
+                    </div>
+                    
                 </div>
             </div>
         </script>
